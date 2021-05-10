@@ -1,17 +1,35 @@
 
 import React from 'react'
+import { connect } from 'react-redux';
+import { notifyUser } from '../reducers/notificationReducer';
 
-const Notification = () => {
+const Notification = (props) => {
   const style = {
     border: 'solid',
     padding: 10,
     borderWidth: 1
   }
+  setTimeout(() => {
+    props.notifyUser('');
+  },5000);
+    
   return (
-    <div style={style}>
-      render here notification...
-    </div>
+    <>
+    {
+      props.notification ?<div style={style}>{props.notification}</div>: ''
+    }
+  </>
   )
 }
 
-export default Notification
+const mapStateToProps = (state) => {
+  return {
+    notification: state.message
+  }
+};
+
+const mapDispatchToProps = {
+  notifyUser
+};
+                            
+export default connect(mapStateToProps, mapDispatchToProps)(Notification)
